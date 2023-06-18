@@ -12,6 +12,7 @@ catkin_make
 ```
 
 PS1: 编译过程中如果缺少对应的ros包，可以根据提示直接安装即可。
+
 PS2: 本测试环境为Ubuntu16 + ros kinetic，在ros melodic和noetic版本中，可能会提示找不到fcl对应的头文件。原因是moveit_core在kinetic之后发生了变化，可以选择手动安装moveit。
 
 ### 3. 生成地图
@@ -19,8 +20,6 @@ PS2: 本测试环境为Ubuntu16 + ros kinetic，在ros melodic和noetic版本中
 每个命令运行之前，记得在map_generator目录下面运行`source devel/setup.bash`。
 
 1. 启动仿真环境
-
-注意
 
 ```
 roslaunch agv_moveit_config demo.launch
