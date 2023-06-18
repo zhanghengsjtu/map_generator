@@ -1,0 +1,52 @@
+<?xml version="1.0"?>  
+<robot name="multiple_agv" xmlns:xacro="http://ros.org/wiki/xacro">  
+    <xacro:include filename="$(find agv_description)/urdf/agv.xacro"/>  
+    <link name="world"/>
+    <xacro:agv prefix="robot1_" x_offset="0" y_offset="0" yaw_offset="0"/>
+
+  <link name="env">
+      <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <material name="agv_color">
+          <color rgba="0.7255 0.7255 0.0 1.0"/>
+      </material>
+      <geometry>
+          <mesh filename="package://agv_description/meshes/envC.dae" scale="200 200 200" />
+      </geometry> 
+      </visual>
+      <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+          <mesh filename="package://agv_description/meshes/envC.STL" scale="200 200 200"/>
+      </geometry> 
+      </collision>
+  </link>
+
+  <joint name="env_to_world" type="fixed">
+      <parent link="world" />
+      <child link="env" />
+      <origin xyz="-3 -7.5 0.0" rpy="0.0 0.0 0.0" />
+  </joint>
+
+  <link name="ground">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://agv_description/meshes/ground.dae" scale="202 202 1"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.01 0.01 0.01" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="ground_to_env" type="fixed">
+      <parent link="env" />
+      <child link="ground" />
+      <origin xyz="-0.1 0.0 -0.0" rpy="0.0 0.0 0.0" />
+  </joint>
+
+</robot>

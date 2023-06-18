@@ -1,0 +1,62 @@
+<?xml version="1.0" ?>
+<robot name="agv" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:macro name="agv" params="prefix x_offset:=0 y_offset:=0 yaw_offset:=0">
+
+    <link name="${prefix}odom"/>
+
+    <joint name="${prefix}odom_to_world" type="fixed">
+      <parent link="world" />
+      <child link="${prefix}odom" />
+      <origin xyz="${x_offset} ${y_offset} 0.0" rpy="0.0 0.0 ${yaw_offset}" />
+    </joint>
+
+    <link name="${prefix}x_link"/>
+    <joint name="${prefix}x_joint" type="prismatic">
+      <parent link="${prefix}odom" />
+      <child link="${prefix}x_link" />
+      <origin xyz="0.0 0 0.0" rpy="0.0 0.0 0.0" />
+      <limit effort="10.0" lower="-3" upper="22" velocity="1"/>
+      <axis xyz="1 0 0"/>
+    </joint>
+
+    <link name="${prefix}y_link"/>
+    <joint name="${prefix}y_joint" type="prismatic">
+      <parent link="${prefix}x_link" />
+      <child link="${prefix}y_link" />
+      <origin xyz="0.0 0 0.0" rpy="0.0 0.0 0.0" />
+      <limit effort="10.0" lower="-7.5" upper="7.5" velocity="1"/>
+      <axis xyz="0 1 0"/>
+    </joint>
+
+    <link name="${prefix}agv_base_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <material name="agv_color">
+          <color rgba="0.7255 0.7255 0.7255 1.0"/>
+        </material>
+        <geometry>
+          <mesh filename="package://agv_description/meshes/agv_base_link.DAE" />
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://agv_description/meshes/agv_base_link_collision.STL" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}angle_joint" type="revolute">
+      <parent link="${prefix}y_link" />
+      <child link="${prefix}agv_base_link" />
+      <origin xyz="0.0 0 0.0" rpy="0.0 0.0 0.0" />
+      <limit effort="1.0" lower="${-2*pi}" upper="${2*pi}" velocity="1"/>
+      <axis xyz="0 0 1"/>
+    </joint>
+
+    <xacro:include filename="$(find agv_description)/urdf/agv.transmission.xacro" />
+    <xacro:agv_transmission prefix="${prefix}" />
+
+  </xacro:macro>
+</robot>

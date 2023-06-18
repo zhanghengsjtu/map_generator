@@ -1,0 +1,6 @@
+controller_list:
+  - name: fake_robot1_agv_controller
+    joints:
+      - robot1_x_joint
+      - robot1_y_joint
+      - robot1_angle_joint

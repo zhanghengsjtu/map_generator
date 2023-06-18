@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:macro name="agv_transmission" params="prefix">
+    <transmission name="${prefix}x_joint_trans" type="pr2_mechanism_model/SimpleTransmission">
+      <joint name="${prefix}x_joint"/>
+      <actuator name="${prefix}x_joint_motor"/>
+        <mechanicalReduction>1</mechanicalReduction>
+    </transmission>
+    <transmission name="${prefix}y_joint_trans" type="pr2_mechanism_model/SimpleTransmission">
+      <joint name="${prefix}y_joint"/>
+      <actuator name="${prefix}y_joint_motor"/>
+        <mechanicalReduction>1</mechanicalReduction>
+    </transmission>
+    <transmission name="${prefix}angle_joint_trans" type="pr2_mechanism_model/SimpleTransmission">
+      <joint name="${prefix}angle_joint"/>
+      <actuator name="${prefix}angle_joint_motor"/>
+        <mechanicalReduction>1</mechanicalReduction>
+    </transmission>
+  </xacro:macro>
+</robot>
